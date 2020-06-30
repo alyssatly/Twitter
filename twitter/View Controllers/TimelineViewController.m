@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) NSMutableArray *tweets;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -27,28 +28,40 @@
     self.tableView.rowHeight = 186;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
+    [self getTimeline];
+    
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    
+    [self.refreshControl addTarget:self action:@selector(getTimeline) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+    [self.tableView addSubview:self.refreshControl];
+    
+}
+
+-(void) getTimeline{
     // Get timeline
-    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
-        if (tweets) {
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
-            
-//            for (NSDictionary *dictionary in tweets) {
-//                Tweet
-//                NSString *text = dictionary[@"text"];
-//                NSLog(@"%@", dictionary);
-//                NSLog(@"%@", text);
-//                Tweet *myTweet = dictionary;
-//                [self.tweets addObject:dictionary];
-//            }
-            self.tweets = (NSMutableArray *)tweets;
-            NSLog(@"here: %@", self.tweets);
-        } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
-        }
-        [self.tableView reloadData];
-    }];
-    
-    
+        [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+            if (tweets) {
+                NSLog(@"😎😎😎 Successfully loaded home timeline");
+                
+    //            for (NSDictionary *dictionary in tweets) {
+    //                Tweet
+    //                NSString *text = dictionary[@"text"];
+    //                NSLog(@"%@", dictionary);
+    //                NSLog(@"%@", text);
+    //                Tweet *myTweet = dictionary;
+    //                [self.tweets addObject:dictionary];
+    //            }
+                self.tweets = (NSMutableArray *)tweets;
+                NSLog(@"here: %@", self.tweets);
+            } else {
+                NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+            }
+            [self.refreshControl endRefreshing];
+            [self.tableView reloadData];
+        }];
 }
 
 - (void)didReceiveMemoryWarning {
