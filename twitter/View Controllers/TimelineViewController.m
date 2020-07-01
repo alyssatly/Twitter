@@ -95,6 +95,7 @@
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     
     Tweet *tweet = self.tweets[indexPath.row];
+    cell.tweet = tweet;
     cell.screenNameLabel.text = tweet.user.name;
     cell.userNameCell.text = [NSString stringWithFormat:@"@%@",tweet.user.screenName];
     cell.timeLabel.text = tweet.createdAtString;
@@ -102,6 +103,16 @@
     cell.repliesLabel.text = [NSString stringWithFormat:@"%d",tweet.repliesCount];
     cell.retweetLabel.text = [NSString stringWithFormat:@"%d",tweet.retweetCount];
     cell.tweetContentLabel.text = tweet.text;
+    if(cell.tweet.favorited == YES){
+        [cell.favButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
+    }else{
+        [cell.favButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
+    }
+    if(cell.tweet.retweeted == YES){
+        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
+    }else{
+        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
+    }
     
     NSString *picURLString = tweet.user.profilePic;
     NSURL*picURL = [NSURL URLWithString:picURLString];
