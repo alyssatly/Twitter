@@ -21,7 +21,13 @@
     // Do any additional setup after loading the view.
 }
 - (IBAction)tweetPressed:(UIBarButtonItem *)sender {
-    [[APIManager shared] postStatusWithText:self.textView.text completion:(^(Tweet *tweet, NSError *error){
+    NSString *outputString;
+    if(self.username != nil){
+        outputString = [NSString stringWithFormat:@"@%@ %@", self.username,self.textView.text];
+    }else{
+        outputString = self.textView.text;
+    }
+    [[APIManager shared] postStatusWithText:outputString completion:(^(Tweet *tweet, NSError *error){
         if(error){
             NSLog(@"Error composing Tweet: %@", error.localizedDescription);
         }
