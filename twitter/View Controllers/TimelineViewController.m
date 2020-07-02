@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.rowHeight = 186;
+    //self.tableView.rowHeight = 186;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
