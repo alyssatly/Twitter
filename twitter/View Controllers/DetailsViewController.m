@@ -12,6 +12,7 @@
 #import "ComposeViewController.h"
 
 
+
 @interface DetailsViewController () <ComposeViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (strong, nonatomic) IBOutlet UILabel *usernameLabel;
@@ -142,6 +143,7 @@
 -(void)didTweet:(Tweet *)tweet{
     //[self.tweets addObject:tweet];
     //[self getTimeline];
+    [self.controller didTweet:self.tweet];
 }
 
 #pragma mark - Navigation

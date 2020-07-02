@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
+#import "TimelineViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DetailsViewController : UIViewController
 
 @property (nonatomic, strong) Tweet *tweet;
-
+@property (nonatomic, strong) TimelineViewController *controller;
 @end
 
 NS_ASSUME_NONNULL_END

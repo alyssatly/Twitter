@@ -93,6 +93,7 @@
         Tweet *tweet = self.tweets[indexPath.row];
         DetailsViewController *detailViewController = (DetailsViewController *)[segue destinationViewController];
         detailViewController.tweet = tweet;
+        detailViewController.controller = self;
     }
 }
 

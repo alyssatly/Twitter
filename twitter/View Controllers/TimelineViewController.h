@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Tweet.h"
 
 @interface TimelineViewController : UIViewController
+
+-(void)didTweet:(Tweet *)tweet;
 
 @end
